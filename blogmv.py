@@ -56,6 +56,10 @@ def postComment(article_id):
 		comments[0].delete()
 	return serialize(comment)
 
+@app.route("/")
+def home():
+	return "OK"
+	
 articles = Article.query().fetch(keys_only=True)
 if len(articles) == 0:
 	hello = Article()
