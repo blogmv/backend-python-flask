@@ -14,7 +14,7 @@ def serialize(result):
 
 @app.route("/api/articles/", methods=['GET'])
 def getArticles():
-	return serialize(list(Article.query().fetch(10)))
+	return serialize(list(Article.query().order(Article.key).fetch(10)))
 
 @app.route("/api/articles/<int:article_id>/", methods=['GET'])
 def getArticle(article_id):
@@ -24,7 +24,7 @@ def getArticle(article_id):
 def getComments(article_id):
 	if not Article.get_by_id(article_id):
 		return "", 404, {"Content-Type": "application/json"}
-	return serialize(list(Comment.query(Comment.article == ndb.Key(Article, article_id)).fetch(10)))
+	return serialize(list(Comment.query(Comment.article == ndb.Key(Article, article_id)).order(Comment.key).fetch(10)))
 
 @app.route("/api/articles/<int:article_id>/comments/<int:comment_id>/", methods=['GET'])
 def getComment(article_id, comment_id):
